@@ -10,7 +10,7 @@ namespace MissionControl
 {
     public class Prompt
     {
-        public static string ShowDialog(string pad, MetroFramework.Controls.MetroTile btn)
+        public static LaunchPad ShowDialog(string pad, MetroFramework.Controls.MetroTile btn)
         {
             MetroForm prompt = new MetroForm()
             {
@@ -49,13 +49,22 @@ namespace MissionControl
             MetroFramework.Controls.MetroButton disableBtn = new MetroFramework.Controls.MetroButton() { Text = "Disable", Left = 350, Width = 100, Top = 125, DialogResult = DialogResult.Cancel };
 
             enableBtn.Click += (sender, e) => { prompt.Close(); };
+            disableBtn.Click += (sender, e) => { prompt.Close(); };
             prompt.Controls.Add(timerSlider);
             prompt.Controls.Add(timerVal);
             prompt.Controls.Add(enableBtn);
             prompt.Controls.Add(disableBtn);
             prompt.AcceptButton = enableBtn;
 
-            return prompt.ShowDialog() == DialogResult.OK ? "" : "";
+            if(prompt.ShowDialog() == DialogResult.OK)
+            {
+                return new LaunchPad(pad, timerVal.Text);
+            } else
+            {
+                return null;
+            }
+
+            //return prompt.ShowDialog() == DialogResult.OK ? "" : "";
         }
     }
 }

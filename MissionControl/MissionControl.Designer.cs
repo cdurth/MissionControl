@@ -44,10 +44,19 @@
             this.pad_3 = new MetroFramework.Controls.MetroTile();
             this.pad_2 = new MetroFramework.Controls.MetroTile();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.tb_armcode = new MetroFramework.Controls.MetroTextBox();
+            this.label1 = new MetroFramework.Controls.MetroLabel();
+            this.tb_server = new MetroFramework.Controls.MetroTextBox();
+            this.powerToggle = new MetroFramework.Controls.MetroToggle();
             this.btn_launch = new MetroFramework.Controls.MetroButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
+            this.tb_powerendpoint = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.Tabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.metroTabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +66,7 @@
             this.Tabs.Controls.Add(this.metroTabPage1);
             this.Tabs.Location = new System.Drawing.Point(3, 63);
             this.Tabs.Name = "Tabs";
-            this.Tabs.SelectedIndex = 0;
+            this.Tabs.SelectedIndex = 1;
             this.Tabs.Size = new System.Drawing.Size(494, 376);
             this.Tabs.TabIndex = 0;
             this.Tabs.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -218,6 +227,14 @@
             // 
             // metroTabPage1
             // 
+            this.metroTabPage1.Controls.Add(this.metroLabel3);
+            this.metroTabPage1.Controls.Add(this.tb_powerendpoint);
+            this.metroTabPage1.Controls.Add(this.metroLabel2);
+            this.metroTabPage1.Controls.Add(this.metroLabel1);
+            this.metroTabPage1.Controls.Add(this.tb_armcode);
+            this.metroTabPage1.Controls.Add(this.label1);
+            this.metroTabPage1.Controls.Add(this.tb_server);
+            this.metroTabPage1.Controls.Add(this.powerToggle);
             this.metroTabPage1.HorizontalScrollbarBarColor = true;
             this.metroTabPage1.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage1.Name = "metroTabPage1";
@@ -225,6 +242,50 @@
             this.metroTabPage1.TabIndex = 2;
             this.metroTabPage1.Text = "Settings";
             this.metroTabPage1.VerticalScrollbarBarColor = true;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(16, 72);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(71, 19);
+            this.metroLabel1.TabIndex = 5;
+            this.metroLabel1.Text = "Arm Code";
+            this.metroLabel1.Click += new System.EventHandler(this.metroLabel1_Click);
+            // 
+            // tb_armcode
+            // 
+            this.tb_armcode.Location = new System.Drawing.Point(16, 94);
+            this.tb_armcode.Name = "tb_armcode";
+            this.tb_armcode.PasswordChar = '*';
+            this.tb_armcode.Size = new System.Drawing.Size(100, 20);
+            this.tb_armcode.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 19);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "ESP8266 IP";
+            // 
+            // tb_server
+            // 
+            this.tb_server.Location = new System.Drawing.Point(16, 39);
+            this.tb_server.Name = "tb_server";
+            this.tb_server.Size = new System.Drawing.Size(100, 20);
+            this.tb_server.TabIndex = 2;
+            // 
+            // powerToggle
+            // 
+            this.powerToggle.AutoSize = true;
+            this.powerToggle.Location = new System.Drawing.Point(219, 39);
+            this.powerToggle.Name = "powerToggle";
+            this.powerToggle.Size = new System.Drawing.Size(80, 17);
+            this.powerToggle.TabIndex = 3;
+            this.powerToggle.Text = "Off";
+            this.powerToggle.CheckedChanged += new System.EventHandler(this.powerToggle_CheckedChanged);
             // 
             // btn_launch
             // 
@@ -235,6 +296,7 @@
             this.btn_launch.TabIndex = 1;
             this.btn_launch.Text = "LAUNCH";
             this.btn_launch.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.btn_launch.Click += new System.EventHandler(this.btn_launch_Click);
             // 
             // pictureBox1
             // 
@@ -245,6 +307,32 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(219, 17);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(97, 19);
+            this.metroLabel2.TabIndex = 6;
+            this.metroLabel2.Text = "Manage Power";
+            // 
+            // tb_powerendpoint
+            // 
+            this.tb_powerendpoint.Enabled = false;
+            this.tb_powerendpoint.Location = new System.Drawing.Point(219, 94);
+            this.tb_powerendpoint.Name = "tb_powerendpoint";
+            this.tb_powerendpoint.Size = new System.Drawing.Size(100, 20);
+            this.tb_powerendpoint.TabIndex = 7;
+            // 
+            // metroLabel3
+            // 
+            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.Location = new System.Drawing.Point(219, 72);
+            this.metroLabel3.Name = "metroLabel3";
+            this.metroLabel3.Size = new System.Drawing.Size(101, 19);
+            this.metroLabel3.TabIndex = 8;
+            this.metroLabel3.Text = "Power Endpoint";
             // 
             // MissionControl
             // 
@@ -261,6 +349,8 @@
             this.Load += new System.EventHandler(this.MissionControl_Load);
             this.Tabs.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.metroTabPage1.ResumeLayout(false);
+            this.metroTabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -286,6 +376,14 @@
         private MetroFramework.Controls.MetroTile pad_8;
         private MetroFramework.Controls.MetroTile pad_7;
         private MetroFramework.Controls.MetroTile pad_6;
+        private MetroFramework.Controls.MetroTextBox tb_server;
+        private MetroFramework.Controls.MetroLabel label1;
+        private MetroFramework.Controls.MetroTextBox tb_armcode;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroToggle powerToggle;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroLabel metroLabel3;
+        private MetroFramework.Controls.MetroTextBox tb_powerendpoint;
     }
 }
 
