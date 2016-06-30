@@ -55,7 +55,8 @@ namespace MissionControl
 
         private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
         {
-            if(padList.Count > 0)
+            launchTimer.Stop();
+            if (padList.Count > 0)
             {
                 // loop thorough active pads, fire, and remove
                 foreach (LaunchPad pad in padList)
@@ -78,11 +79,7 @@ namespace MissionControl
                 exitFlag = true;
             }
             seconds++;
-
-        }
-
-        private void metroLabel1_Click(object sender, EventArgs e)
-        {
+            launchTimer.Enabled = true;
 
         }
 
