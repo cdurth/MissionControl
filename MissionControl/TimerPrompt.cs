@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MissionControl
 {
-    public class Prompt
+    public class TimerPrompt
     {
         public static LaunchPad ShowDialog(string pad, MetroFramework.Controls.MetroTile btn)
         {
@@ -17,8 +17,8 @@ namespace MissionControl
                 Width = 500,
                 Height = 180,
                 Text = pad,
-
-            };
+                MaximizeBox = false
+             };
 
             MetroFramework.Controls.MetroTextBox timerVal = new MetroFramework.Controls.MetroTextBox();
             timerVal.Location = new System.Drawing.Point(130, 100);

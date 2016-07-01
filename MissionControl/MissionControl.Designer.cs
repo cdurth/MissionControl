@@ -6,7 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        public System.Collections.Generic.List<MetroFramework.Controls.MetroTile> tileList = new System.Collections.Generic.List<MetroFramework.Controls.MetroTile>();
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -32,18 +32,32 @@
             this.Tabs = new MetroFramework.Controls.MetroTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pad_9 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_9);
             this.pad_12 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_12);
             this.pad_11 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_11);
             this.pad_10 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_10);
             this.pad_5 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_5);
             this.pad_8 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_8);
             this.pad_7 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_7);
             this.pad_6 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_6);
             this.pad_1 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_1);
             this.pad_4 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_4);
             this.pad_3 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_3);
             this.pad_2 = new MetroFramework.Controls.MetroTile();
+            tileList.Add(pad_2);
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
+            this.btn_save = new MetroFramework.Controls.MetroButton();
+            this.btn_reset = new MetroFramework.Controls.MetroButton();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.tb_powerendpoint = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
@@ -54,6 +68,9 @@
             this.powerToggle = new MetroFramework.Controls.MetroToggle();
             this.btn_launch = new MetroFramework.Controls.MetroButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_ping = new MetroFramework.Controls.MetroButton();
+            this.tb_port = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.Tabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
@@ -66,11 +83,10 @@
             this.Tabs.Controls.Add(this.metroTabPage1);
             this.Tabs.Location = new System.Drawing.Point(3, 63);
             this.Tabs.Name = "Tabs";
-            this.Tabs.SelectedIndex = 0;
+            this.Tabs.SelectedIndex = 1;
             this.Tabs.Size = new System.Drawing.Size(494, 376);
             this.Tabs.TabIndex = 0;
             this.Tabs.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.Tabs.SelectedTab = tabPage1;
             // 
             // tabPage1
             // 
@@ -93,6 +109,7 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Dashboard";
             this.tabPage1.UseVisualStyleBackColor = true;
+            Tabs.SelectedTab = tabPage1;
             // 
             // pad_9
             // 
@@ -228,6 +245,11 @@
             // 
             // metroTabPage1
             // 
+            this.metroTabPage1.Controls.Add(this.metroLabel4);
+            this.metroTabPage1.Controls.Add(this.tb_port);
+            this.metroTabPage1.Controls.Add(this.btn_ping);
+            this.metroTabPage1.Controls.Add(this.btn_save);
+            this.metroTabPage1.Controls.Add(this.btn_reset);
             this.metroTabPage1.Controls.Add(this.metroLabel3);
             this.metroTabPage1.Controls.Add(this.tb_powerendpoint);
             this.metroTabPage1.Controls.Add(this.metroLabel2);
@@ -244,10 +266,28 @@
             this.metroTabPage1.Text = "Settings";
             this.metroTabPage1.VerticalScrollbarBarColor = true;
             // 
+            // btn_save
+            // 
+            this.btn_save.Location = new System.Drawing.Point(16, 201);
+            this.btn_save.Name = "btn_save";
+            this.btn_save.Size = new System.Drawing.Size(101, 23);
+            this.btn_save.TabIndex = 10;
+            this.btn_save.Text = "Save Settings";
+            this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
+            // 
+            // btn_reset
+            // 
+            this.btn_reset.Location = new System.Drawing.Point(239, 147);
+            this.btn_reset.Name = "btn_reset";
+            this.btn_reset.Size = new System.Drawing.Size(101, 23);
+            this.btn_reset.TabIndex = 9;
+            this.btn_reset.Text = "Reset Pads";
+            this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
+            // 
             // metroLabel3
             // 
             this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(219, 72);
+            this.metroLabel3.Location = new System.Drawing.Point(239, 72);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(101, 19);
             this.metroLabel3.TabIndex = 8;
@@ -256,7 +296,7 @@
             // tb_powerendpoint
             // 
             this.tb_powerendpoint.Enabled = false;
-            this.tb_powerendpoint.Location = new System.Drawing.Point(219, 94);
+            this.tb_powerendpoint.Location = new System.Drawing.Point(239, 94);
             this.tb_powerendpoint.Name = "tb_powerendpoint";
             this.tb_powerendpoint.Size = new System.Drawing.Size(100, 20);
             this.tb_powerendpoint.TabIndex = 7;
@@ -264,7 +304,7 @@
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(219, 17);
+            this.metroLabel2.Location = new System.Drawing.Point(239, 17);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(97, 19);
             this.metroLabel2.TabIndex = 6;
@@ -273,7 +313,7 @@
             // metroLabel1
             // 
             this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(16, 72);
+            this.metroLabel1.Location = new System.Drawing.Point(16, 125);
             this.metroLabel1.Name = "metroLabel1";
             this.metroLabel1.Size = new System.Drawing.Size(71, 19);
             this.metroLabel1.TabIndex = 5;
@@ -281,10 +321,10 @@
             // 
             // tb_armcode
             // 
-            this.tb_armcode.Location = new System.Drawing.Point(16, 94);
+            this.tb_armcode.Location = new System.Drawing.Point(16, 147);
             this.tb_armcode.Name = "tb_armcode";
             this.tb_armcode.PasswordChar = '*';
-            this.tb_armcode.Size = new System.Drawing.Size(100, 20);
+            this.tb_armcode.Size = new System.Drawing.Size(150, 20);
             this.tb_armcode.TabIndex = 4;
             // 
             // label1
@@ -300,13 +340,13 @@
             // 
             this.tb_server.Location = new System.Drawing.Point(16, 39);
             this.tb_server.Name = "tb_server";
-            this.tb_server.Size = new System.Drawing.Size(100, 20);
+            this.tb_server.Size = new System.Drawing.Size(150, 20);
             this.tb_server.TabIndex = 2;
             // 
             // powerToggle
             // 
             this.powerToggle.AutoSize = true;
-            this.powerToggle.Location = new System.Drawing.Point(219, 39);
+            this.powerToggle.Location = new System.Drawing.Point(239, 39);
             this.powerToggle.Name = "powerToggle";
             this.powerToggle.Size = new System.Drawing.Size(80, 17);
             this.powerToggle.TabIndex = 3;
@@ -333,6 +373,31 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
+            // 
+            // btn_ping
+            // 
+            this.btn_ping.Location = new System.Drawing.Point(239, 201);
+            this.btn_ping.Name = "btn_ping";
+            this.btn_ping.Size = new System.Drawing.Size(101, 23);
+            this.btn_ping.TabIndex = 11;
+            this.btn_ping.Text = "Ping Server";
+            this.btn_ping.Click += new System.EventHandler(this.btn_ping_Click);
+            // 
+            // tb_port
+            // 
+            this.tb_port.Location = new System.Drawing.Point(16, 94);
+            this.tb_port.Name = "tb_port";
+            this.tb_port.Size = new System.Drawing.Size(86, 20);
+            this.tb_port.TabIndex = 12;
+            // 
+            // metroLabel4
+            // 
+            this.metroLabel4.AutoSize = true;
+            this.metroLabel4.Location = new System.Drawing.Point(16, 72);
+            this.metroLabel4.Name = "metroLabel4";
+            this.metroLabel4.Size = new System.Drawing.Size(34, 19);
+            this.metroLabel4.TabIndex = 13;
+            this.metroLabel4.Text = "Port";
             // 
             // MissionControl
             // 
@@ -385,6 +450,11 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroTextBox tb_powerendpoint;
+        private MetroFramework.Controls.MetroButton btn_reset;
+        private MetroFramework.Controls.MetroButton btn_save;
+        private MetroFramework.Controls.MetroButton btn_ping;
+        private MetroFramework.Controls.MetroLabel metroLabel4;
+        private MetroFramework.Controls.MetroTextBox tb_port;
     }
 }
 

@@ -32,14 +32,14 @@ namespace MissionControl
         
         private string makeUrl(int id)
         {
-            string tmpUrl = ConfigurationSettings.AppSettings["server"] + "/launch/" + id.ToString();
+            string tmpUrl = ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"] + "/launch/" + id.ToString();
             return tmpUrl;
         }
 
         public void launch()
         {
-            string server = ConfigurationSettings.AppSettings["server"];
-            var client = new RestClient(server);
+            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"];
+            var client = new RestClient(url);
             var request = new RestRequest("launch?tube="+id, Method.GET);
             client.ExecuteAsync(request, response => {
                 //do something if i want to wait
