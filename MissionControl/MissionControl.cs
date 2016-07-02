@@ -11,6 +11,7 @@ using MetroFramework.Forms;
 using System.Configuration;
 using MissionControl.Properties;
 using System.Net.NetworkInformation;
+using RestSharp;
 
 namespace MissionControl
 {
@@ -46,14 +47,55 @@ namespace MissionControl
             }
         }
 
+        private bool arm()
+        {
+            bool retval = false;
+            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"];
+            var client = new RestClient(url);
+            var request = new RestRequest("arm?code=" + tb_armcode.Text, Method.GET);
+            IRestResponse response = client.Execute(request);
+            if(response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                if(response.Content == "true")
+                {
+                    retval = true;
+                }
+            }
+            return retval;
+        }
+
+        private bool powerHandler(int i)
+        {
+            bool retval = false;
+            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"];
+            var client = new RestClient(url);
+            var request = new RestRequest("power?code=" + i.ToString(), Method.GET);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string res = response.Content.Split(',')[0];
+                if (res == "true")
+                {
+                    retval = true;
+                }
+            }
+            return retval;
+        }
+
         private void btn_launch_Click(object sender, EventArgs e)
         {
-            launchTimer.Start();
-            seconds = 0;
-            removedPads.Clear();
-            while(!exitFlag)
+            if (arm())
             {
-                Application.DoEvents();
+                if (powerHandler(1))
+                {
+                    launchTimer.Start();
+                    seconds = 0;
+                    removedPads.Clear();
+                    while (!exitFlag)
+                    {
+                        Application.DoEvents();
+                    }
+                }
             }
         }
 
@@ -96,6 +138,8 @@ namespace MissionControl
             }
             removedPads.Clear();
             padList.Clear();
+            powerHandler(0);
+            tb_armcode.Text = "";
         }
 
         private void powerToggle_CheckedChanged(object sender, EventArgs e)
@@ -121,8 +165,8 @@ namespace MissionControl
             config.AppSettings.Settings.Add("server", tb_server.Text);
             config.AppSettings.Settings.Remove("port");
             config.AppSettings.Settings.Add("port", tb_port.Text);
-            config.AppSettings.Settings.Remove("armcode");
-            config.AppSettings.Settings.Add("armcode", tb_armcode.Text);
+            //config.AppSettings.Settings.Remove("armcode");
+            //config.AppSettings.Settings.Add("armcode", tb_armcode.Text);
             config.AppSettings.Settings.Remove("powerendpoint");
             config.AppSettings.Settings.Add("powerendpoint", tb_powerendpoint.Text);
             config.Save(ConfigurationSaveMode.Minimal);
@@ -134,7 +178,7 @@ namespace MissionControl
         {
             tb_server.Text = ConfigurationManager.AppSettings["server"];
             tb_port.Text = ConfigurationManager.AppSettings["port"];
-            tb_armcode.Text = ConfigurationManager.AppSettings["armcode"];
+            //tb_armcode.Text = ConfigurationManager.AppSettings["armcode"];
             tb_powerendpoint.Text = ConfigurationManager.AppSettings["powerendpoint"];
         }
 
