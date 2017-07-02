@@ -17,23 +17,21 @@ namespace MissionControl
 {
     public partial class MissionControl : MetroForm
     {
-        static System.Windows.Forms.Timer launchTimer = new System.Windows.Forms.Timer();
 
-        static bool exitFlag = false;
-        static int seconds = 0;
+        // TODO: need to fix bug where clicking on already enabled pad will create new OBJ vs modifiy existing.
+
+        static System.Windows.Forms.Timer launchTimer = new System.Windows.Forms.Timer();
         List<LaunchPad> padList = new List<LaunchPad>();
-        List<LaunchPad> removedPads = new List<LaunchPad>();
 
         public MissionControl()
         {
             InitializeComponent();
             loadSettings();
-            launchTimer.Tick += new EventHandler(TimerEventProcessor);
-            launchTimer.Interval = 1000;
         }
 
         private void MissionControl_Load(object sender, EventArgs e)
         {
+            btn_launch.Enabled = false;
         }
 
         private void timer_dialog(object sender, EventArgs e)
@@ -47,87 +45,16 @@ namespace MissionControl
             }
         }
 
-        private bool arm()
-        {
-            bool retval = false;
-            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"];
-            var client = new RestClient(url);
-            var request = new RestRequest("arm?code=" + tb_armcode.Text, Method.GET);
-            IRestResponse response = client.Execute(request);
-            if(response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                if(response.Content == "true")
-                {
-                    retval = true;
-                }
-            }
-            return retval;
-        }
-
-        private bool powerHandler(int i)
-        {
-            bool retval = false;
-            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"];
-            var client = new RestClient(url);
-            var request = new RestRequest("power?code=" + i.ToString(), Method.GET);
-            IRestResponse response = client.Execute(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                string res = response.Content.Split(',')[0];
-                if (res == "true")
-                {
-                    retval = true;
-                }
-            }
-            return retval;
-        }
-
         private void btn_launch_Click(object sender, EventArgs e)
         {
-            if (arm())
+            // do things here
+            if (launchGET())
             {
-                if (powerHandler(1))
-                {
-                    launchTimer.Start();
-                    seconds = 0;
-                    removedPads.Clear();
-                    while (!exitFlag)
-                    {
-                        Application.DoEvents();
-                    }
-                }
-            }
-        }
-
-        private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
-        {
-            launchTimer.Stop();
-            if (padList.Count > 0)
-            {
-                // loop thorough active pads, fire, and remove
-                foreach (LaunchPad pad in padList)
-                {
-                    if(pad.delay == seconds)
-                    {
-                        //make launch requests here
-                        pad.launch();
-                        removedPads.Add(pad);
-                    }
-                }
-                foreach(LaunchPad pad in removedPads)
-                {
-                    padList.Remove(pad);
-                }
-
+                btn_launch.Enabled = false;
             } else
             {
-                launchTimer.Stop();
-                exitFlag = true;
-                resetForm();
+                MessageBox.Show("There was an issue launching.");
             }
-            seconds++;
-            launchTimer.Enabled = true;
-
         }
 
         private void resetForm()
@@ -136,21 +63,8 @@ namespace MissionControl
             {
                 tile.Style = MetroFramework.MetroColorStyle.Silver;
             }
-            removedPads.Clear();
             padList.Clear();
-            powerHandler(0);
-            tb_armcode.Text = "";
-        }
-
-        private void powerToggle_CheckedChanged(object sender, EventArgs e)
-        {
-            if (((MetroFramework.Controls.MetroToggle)sender).Checked)
-            {
-                tb_powerendpoint.Enabled = true;
-            } else
-            {
-                tb_powerendpoint.Enabled = false;
-            }
+            btn_launch.Enabled = false;
         }
 
         private void btn_reset_Click(object sender, EventArgs e)
@@ -165,10 +79,8 @@ namespace MissionControl
             config.AppSettings.Settings.Add("server", tb_server.Text);
             config.AppSettings.Settings.Remove("port");
             config.AppSettings.Settings.Add("port", tb_port.Text);
-            //config.AppSettings.Settings.Remove("armcode");
-            //config.AppSettings.Settings.Add("armcode", tb_armcode.Text);
-            config.AppSettings.Settings.Remove("powerendpoint");
-            config.AppSettings.Settings.Add("powerendpoint", tb_powerendpoint.Text);
+            config.AppSettings.Settings.Remove("armcode");
+            config.AppSettings.Settings.Add("armcode", tb_armcode.Text);
             config.Save(ConfigurationSaveMode.Minimal);
 
 
@@ -178,8 +90,7 @@ namespace MissionControl
         {
             tb_server.Text = ConfigurationManager.AppSettings["server"];
             tb_port.Text = ConfigurationManager.AppSettings["port"];
-            //tb_armcode.Text = ConfigurationManager.AppSettings["armcode"];
-            tb_powerendpoint.Text = ConfigurationManager.AppSettings["powerendpoint"];
+            tb_armcode.Text = ConfigurationManager.AppSettings["armcode"];
         }
 
         private void btn_ping_Click(object sender, EventArgs e)
@@ -190,8 +101,7 @@ namespace MissionControl
             } else
             {
                 MessageBox.Show("Ping failed");
-            }
-            
+            } 
         }
 
         public static bool PingHost(string nameOrAddress)
@@ -208,6 +118,75 @@ namespace MissionControl
                 // Discard PingExceptions and return false;
             }
             return pingable;
+        }
+
+        private void btn_load_Click(object sender, EventArgs e)
+        {
+            string loadPadsReqStr = "[";
+            int numPads = padList.Count;
+            int padIndex = 0;
+            foreach (LaunchPad pad in padList)
+            {
+                padIndex++;
+                if(padIndex == numPads)
+                {
+                    // last pad, dont append comma
+                    loadPadsReqStr += padToJSON(pad) + "]";
+                }
+                else
+                {
+                    loadPadsReqStr += padToJSON(pad) + ",";
+                }
+            }
+
+            if (loadPOST(loadPadsReqStr))
+            {
+                btn_launch.Enabled = true;
+            } else
+            {
+                MessageBox.Show("There was a problem loading.");
+            }
+        }
+
+        private bool loadPOST(string body)
+        {
+            bool retVal = false;
+            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"] + "/api/v1/launch";
+            var client = new RestClient(url);
+            var request = new RestRequest();
+            request.Method = Method.POST;
+            request.AddHeader("Accept", "application/json");
+            request.Parameters.Clear();
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                retVal = true;
+            }
+
+            return retVal;
+        }
+
+        private bool launchGET()
+        {
+            bool retVal = false;
+
+            bool retval = false;
+            string url = "http://" + ConfigurationSettings.AppSettings["server"] + ":" + ConfigurationSettings.AppSettings["port"];
+            var client = new RestClient(url);
+            var request = new RestRequest("api/v1/launch?armCode=" + tb_armcode.Text, Method.GET);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                retVal = true;
+            }
+            return retVal;
+        }
+
+        public string padToJSON(LaunchPad pad)
+        {
+            return "{\"tubeId\":\""+ pad.id + "\",\"delayTime\":\"" + pad.delay + "\"}";
         }
     }
 }

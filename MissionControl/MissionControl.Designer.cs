@@ -50,15 +50,14 @@
             this.btn_save = new MetroFramework.Controls.MetroButton();
             this.btn_reset = new MetroFramework.Controls.MetroButton();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
-            this.tb_powerendpoint = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.tb_armcode = new MetroFramework.Controls.MetroTextBox();
             this.label1 = new MetroFramework.Controls.MetroLabel();
             this.tb_server = new MetroFramework.Controls.MetroTextBox();
-            this.powerToggle = new MetroFramework.Controls.MetroToggle();
             this.btn_launch = new MetroFramework.Controls.MetroButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_load = new MetroFramework.Controls.MetroButton();
             this.Tabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
@@ -238,13 +237,11 @@
             this.metroTabPage1.Controls.Add(this.btn_save);
             this.metroTabPage1.Controls.Add(this.btn_reset);
             this.metroTabPage1.Controls.Add(this.metroLabel3);
-            this.metroTabPage1.Controls.Add(this.tb_powerendpoint);
             this.metroTabPage1.Controls.Add(this.metroLabel2);
             this.metroTabPage1.Controls.Add(this.metroLabel1);
             this.metroTabPage1.Controls.Add(this.tb_armcode);
             this.metroTabPage1.Controls.Add(this.label1);
             this.metroTabPage1.Controls.Add(this.tb_server);
-            this.metroTabPage1.Controls.Add(this.powerToggle);
             this.metroTabPage1.HorizontalScrollbarBarColor = true;
             this.metroTabPage1.Location = new System.Drawing.Point(4, 35);
             this.metroTabPage1.Name = "metroTabPage1";
@@ -298,29 +295,17 @@
             // 
             // metroLabel3
             // 
-            this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(239, 72);
+            this.metroLabel3.Location = new System.Drawing.Point(0, 0);
             this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(101, 19);
-            this.metroLabel3.TabIndex = 8;
-            this.metroLabel3.Text = "Power Endpoint";
-            // 
-            // tb_powerendpoint
-            // 
-            this.tb_powerendpoint.Enabled = false;
-            this.tb_powerendpoint.Location = new System.Drawing.Point(239, 94);
-            this.tb_powerendpoint.Name = "tb_powerendpoint";
-            this.tb_powerendpoint.Size = new System.Drawing.Size(100, 20);
-            this.tb_powerendpoint.TabIndex = 7;
+            this.metroLabel3.Size = new System.Drawing.Size(100, 23);
+            this.metroLabel3.TabIndex = 14;
             // 
             // metroLabel2
             // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(239, 17);
+            this.metroLabel2.Location = new System.Drawing.Point(0, 0);
             this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(97, 19);
-            this.metroLabel2.TabIndex = 6;
-            this.metroLabel2.Text = "Manage Power";
+            this.metroLabel2.Size = new System.Drawing.Size(100, 23);
+            this.metroLabel2.TabIndex = 15;
             // 
             // metroLabel1
             // 
@@ -355,22 +340,12 @@
             this.tb_server.Size = new System.Drawing.Size(150, 20);
             this.tb_server.TabIndex = 2;
             // 
-            // powerToggle
-            // 
-            this.powerToggle.AutoSize = true;
-            this.powerToggle.Location = new System.Drawing.Point(239, 39);
-            this.powerToggle.Name = "powerToggle";
-            this.powerToggle.Size = new System.Drawing.Size(80, 17);
-            this.powerToggle.TabIndex = 3;
-            this.powerToggle.Text = "Off";
-            this.powerToggle.CheckedChanged += new System.EventHandler(this.powerToggle_CheckedChanged);
-            // 
             // btn_launch
             // 
             this.btn_launch.Location = new System.Drawing.Point(503, 357);
             this.btn_launch.Name = "btn_launch";
             this.btn_launch.Size = new System.Drawing.Size(256, 67);
-            this.btn_launch.Style = MetroFramework.MetroColorStyle.Blue;
+            this.btn_launch.Style = MetroFramework.MetroColorStyle.Red;
             this.btn_launch.TabIndex = 1;
             this.btn_launch.Text = "LAUNCH";
             this.btn_launch.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -379,18 +354,30 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(503, 98);
+            this.pictureBox1.Location = new System.Drawing.Point(503, 36);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(256, 236);
+            this.pictureBox1.Size = new System.Drawing.Size(256, 242);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
+            // 
+            // btn_load
+            // 
+            this.btn_load.Location = new System.Drawing.Point(503, 284);
+            this.btn_load.Name = "btn_load";
+            this.btn_load.Size = new System.Drawing.Size(256, 67);
+            this.btn_load.Style = MetroFramework.MetroColorStyle.Blue;
+            this.btn_load.TabIndex = 10;
+            this.btn_load.Text = "LOAD";
+            this.btn_load.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.btn_load.Click += new System.EventHandler(this.btn_load_Click);
             // 
             // MissionControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(778, 444);
+            this.Controls.Add(this.btn_load);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btn_launch);
             this.Controls.Add(this.Tabs);
@@ -433,15 +420,14 @@
         private MetroFramework.Controls.MetroLabel label1;
         private MetroFramework.Controls.MetroTextBox tb_armcode;
         private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroToggle powerToggle;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroLabel metroLabel3;
-        private MetroFramework.Controls.MetroTextBox tb_powerendpoint;
         private MetroFramework.Controls.MetroButton btn_reset;
         private MetroFramework.Controls.MetroButton btn_save;
         private MetroFramework.Controls.MetroButton btn_ping;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroTextBox tb_port;
+        private MetroFramework.Controls.MetroButton btn_load;
     }
 }
 
